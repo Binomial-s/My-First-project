@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VPMZ7T9KCN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VPMZ7T9KCN');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Website</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
   <style>
     /* Reset some default browser styles */
     html, body {
@@ -76,7 +85,7 @@
 
     #counter {
       font-size: 24px;
-      font-weight: bold;
+            font-weight: bold;
       margin: 20px;
     }
 
@@ -111,7 +120,6 @@
     <p>&copy; 2024 Interactive Web</p>
   </footer>
 
-
   <script>
     let clickCount = 0;
     let isDarkMode = false;
@@ -137,14 +145,15 @@
             alert("Sorry, we are unable to open the link at this time.");
             // Consider: displaying an error message on the page in the future
           }
+
         }
 
     function updateTheme(isDarkMode) {
         const backgroundColor = isDarkMode ? '#333' : '#f0f0f0';
         const textColor = isDarkMode ? '#fff' : '#000';
 
-         document.body.style.backgroundColor = backgroundColor;
-          document.body.style.color = textColor;
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.color = textColor;
     }
 
     function toggleTheme() {
