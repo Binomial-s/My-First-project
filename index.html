@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Analytics Tag -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VPMZ7T9KCN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-VPMZ7T9KCN');
-  </script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Website with Dino Game</title>
@@ -77,21 +68,14 @@
       font-size: 18px;
     }
 
-    .footer {
-      padding: 10px;
-    }
-
-    #counter {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 20px;
-    }
-
-    #surprise-message {
-      display: none;
-      margin-top: 20px;
-      font-style: italic;
-      color: #777;
+    #sleepyMusicButton {
+      background-color: #333;
+      color: white;
+      border: 2px solid white;
+      border-radius: 5px;
+      padding: 10px 20px;
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -109,30 +93,35 @@
     <button onclick="toggleTheme()">Toggle Theme</button>
     <button onclick="showSurprise()">Surprise Me</button>
     <button onclick="navigateToCapital()">Capital</button>
+    <button id="sleepyMusicButton" onclick="playSleepyMusic()" disabled>Sleepy Music</button>
     <p id="surprise-message"></p>
-
-    <!-- Dino Game -->
-    <div id="game-container">
-      <canvas id="gameCanvas" width="600" height="300"></canvas>
-      <div id="overlay">
-        <div>Game Over! Press Enter to Restart</div>
-      </div>
-      <p id="scoreDisplay">Score: 0</p>
-    </div>
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 Interactive Web</p>
-  </footer>
+  <!-- Dino Game -->
+  <div id="game-container">
+    <canvas id="gameCanvas" width="600" height="300"></canvas>
+    <div id="overlay">
+      <div>Game Over! Press Enter to Restart</div>
+    </div>
+    <p id="scoreDisplay">Score: 0</p>
+  </div>
 
   <script>
-    // Existing Interactive Features
     let clickCount = 0;
     let isDarkMode = false;
 
     function incrementCounter() {
       clickCount++;
       document.getElementById('counter').textContent = `Button Clicks: ${clickCount}`;
+
+      // Enable Sleepy Music button after 25 clicks
+      if (clickCount >= 25) {
+        const sleepyMusicButton = document.getElementById("sleepyMusicButton");
+        sleepyMusicButton.disabled = false;
+        sleepyMusicButton.style.opacity = "1";
+        sleepyMusicButton.style.cursor = "pointer";
+        alert("You've unlocked the Sleepy Music button!");
+      }
     }
 
     function resetCounter() {
@@ -141,14 +130,8 @@
     }
 
     function explore() {
-      try {
-        const linkToExplore = "https://www.google.com";
-        new URL(linkToExplore);
-        window.location.href = linkToExplore;
-      } catch (error) {
-        console.error("Error: Could not open external url", error);
-        alert("Sorry, we are unable to open the link at this time.");
-      }
+      const linkToExplore = "https://www.google.com";
+      window.location.href = linkToExplore;
     }
 
     function updateTheme(isDarkMode) {
@@ -177,14 +160,12 @@
     }
 
     function navigateToCapital() {
-      try {
-        const capitalURL = 'https://tinyurl.com/279f9x5f';
-        new URL(capitalURL);
-        window.open(capitalURL, '_blank');
-      } catch (error) {
-        console.error('Error opening Capital link:', error);
-        alert('Unable to open Capital link. Please try again later.');
-      }
+      const capitalURL = 'https://tinyurl.com/279f9x5f';
+      window.open(capitalURL, '_blank');
+    }
+
+    function playSleepyMusic() {
+      window.open('https://youtube.com/playlist?list=RDKSpeKBhXhwg&playnext=1', '_blank');
     }
 
     // Dino Game Code
