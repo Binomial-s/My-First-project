@@ -7,7 +7,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-VPMZ7T9KCN');
   </script>
   <meta charset="UTF-8">
@@ -17,7 +16,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
   <style>
-    /* Reset some default browser styles */
     html, body {
         margin: 0;
         padding: 0;
@@ -27,25 +25,25 @@
       text-align: center;
       background-color: #f0f0f0;
       transition: background-color 0.3s, color 0.3s;
-      color: black; /* Default text color */
-        min-height: 100vh; /* Ensure body covers full viewport height */
-         display: flex;
-        flex-direction: column;
-      }
+      color: black;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-      .header {
-         padding: 20px;
-        margin-bottom: 20px;
-      }
+    .header {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
 
     .content {
-        margin: 20px;
-        display: flex;
-        flex-direction: column; /* Stack items vertically */
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-         flex-grow: 1; /* Allow content to grow to fill available space */
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      flex-grow: 1;
     }
 
     button {
@@ -60,7 +58,7 @@
       margin: 10px;
       position: relative;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      outline: none; /* Remove default focus outline */
+      outline: none;
     }
 
     button:hover {
@@ -79,28 +77,28 @@
       transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
-     button:focus {
-            box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.5);
-         }
+    button:focus {
+      box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.5);
+    }
 
     #counter {
       font-size: 24px;
-            font-weight: bold;
+      font-weight: bold;
       margin: 20px;
     }
 
-      #surprise-message {
-        display: none;
-        margin-top: 20px;
-        font-style: italic;
-        color: #777;
-      }
+    #surprise-message {
+      display: none;
+      margin-top: 20px;
+      font-style: italic;
+      color: #777;
+    }
 
     .footer {
-       padding: 10px;
-       text-align: center;
-       color: #888;
-     }
+      padding: 10px;
+      text-align: center;
+      color: #888;
+    }
   </style>
 </head>
 <body>
@@ -114,6 +112,8 @@
     <button onclick="explore()">Explore</button>
     <button onclick="toggleTheme()">Toggle Theme</button>
     <button onclick="showSurprise()">Surprise Me</button>
+    <!-- New Capital Button -->
+    <button onclick="navigateToCapital()">Capital</button>
     <p id="surprise-message"></p>
   </div>
   <footer class="footer">
@@ -134,26 +134,22 @@
       document.getElementById('counter').textContent = 'Button Clicks: 0';
     }
 
-
-     function explore() {
-          try {
-            const linkToExplore = "https://www.google.com"; // Replace with your desired URL
-            new URL(linkToExplore); // Validating URL, will throw an error if URL is invalid
-            window.location.href = linkToExplore;
-          } catch(error){
-            console.error("Error: Could not open external url", error)
-            alert("Sorry, we are unable to open the link at this time.");
-            // Consider: displaying an error message on the page in the future
-          }
-
-        }
+    function explore() {
+      try {
+        const linkToExplore = "https://www.google.com";
+        new URL(linkToExplore);
+        window.location.href = linkToExplore;
+      } catch(error){
+        console.error("Error: Could not open external url", error);
+        alert("Sorry, we are unable to open the link at this time.");
+      }
+    }
 
     function updateTheme(isDarkMode) {
-        const backgroundColor = isDarkMode ? '#333' : '#f0f0f0';
-        const textColor = isDarkMode ? '#fff' : '#000';
-
-        document.body.style.backgroundColor = backgroundColor;
-        document.body.style.color = textColor;
+      const backgroundColor = isDarkMode ? '#333' : '#f0f0f0';
+      const textColor = isDarkMode ? '#fff' : '#000';
+      document.body.style.backgroundColor = backgroundColor;
+      document.body.style.color = textColor;
     }
 
     function toggleTheme() {
@@ -161,21 +157,30 @@
       updateTheme(isDarkMode);
     }
 
-     function showSurprise() {
-            const surprises = [
-              "Did you know honey never spoils?",
-              "Bananas are berries, but strawberries aren't!",
-              "A day on Venus is longer than a year!",
-              "Octopuses have three hearts!"
-            ];
-            const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
+    function showSurprise() {
+      const surprises = [
+        "Did you know honey never spoils?",
+        "Bananas are berries, but strawberries aren't!",
+        "A day on Venus is longer than a year!",
+        "Octopuses have three hearts!"
+      ];
+      const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
+      const surpriseMessage = document.getElementById("surprise-message");
+      surpriseMessage.textContent = randomSurprise;
+      surpriseMessage.style.display = "block";
+    }
 
-            const surpriseMessage = document.getElementById("surprise-message");
-            surpriseMessage.textContent = randomSurprise;
-            surpriseMessage.style.display = "block"; // Show the message
-          }
-
-
+    // New Capital Button Functionality
+    function navigateToCapital() {
+      try {
+        const capitalURL = 'https://tinyurl.com/279f9x5f';
+        new URL(capitalURL); // Validate URL
+        window.open(capitalURL, '_blank'); // Open in new tab
+      } catch (error) {
+        console.error('Error opening Capital link:', error);
+        alert('Unable to open Capital link. Please try again later.');
+      }
+    }
   </script>
 </body>
 </html>
