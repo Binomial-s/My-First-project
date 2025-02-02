@@ -18,6 +18,7 @@
 
     .header {
       padding: 20px;
+      background-color: lightblue;
     }
 
     .content {
@@ -50,6 +51,24 @@
     button:nth-of-type(6) { grid-area: capital; }
     button#sleepyMusicButton { grid-area: music; }
 
+    button.circle-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 0;
+      margin: 10px;
+    }
+
+    button.green-start {
+      background-color: green;
+      cursor: pointer;
+    }
+
+    button.blue-restart {
+      background-color: blue;
+      cursor: pointer;
+    }
+
     #game-container {
       position: relative;
       max-width: 600px;
@@ -80,12 +99,8 @@
       font-size: 18px;
     }
 
-    #surprise-message {
-      margin-top: 10px;
-    }
-
     #sleepyMusicButton {
-      background-color: #333;
+      background-color: black;
       color: white;
       border: 2px solid white;
       border-radius: 20px;
@@ -114,6 +129,9 @@
   </div>
 
   <div id="game-container">
+    <button class="circle-button green-start" onclick="startGame()"></button>
+    <button class="circle-button blue-restart" onclick="resetGame()"></button>
+
     <canvas id="gameCanvas" width="600" height="300"></canvas>
     <div id="overlay">
       <div>Game Over! Press Enter to Restart</div>
@@ -186,27 +204,28 @@
     const scoreDisplay = document.getElementById('scoreDisplay');
     const WIDTH = canvas.width;
     const HEIGHT = canvas.height;
-    const DINO_SIZE = 40;
+    const DINO_RADIUS = 20;
     const OBSTACLE_WIDTH = 30;
     const OBSTACLE_HEIGHT = 60;
     const JUMP_SPEED = 15;
     const GRAVITY = 1;
-    const DINO_START_Y = HEIGHT - DINO_SIZE - 20;
     const GROUND_Y = HEIGHT - 20;
     let SPEED = 5;
+    let gameRunning = false;
 
-    let dino, obstacles, score, game_over, obstacle_timer, obstacle_frequency;
+    let dino, obstacles, score, gameOver, obstacleTimer, obstacleFrequency;
 
     function resetGame() {
-      dino = { x: 50, y: DINO_START_Y, size: DINO_SIZE, y_velocity: 0, is_jumping: false };
+      dino = { x: 50, y: GROUND_Y - DINO_RADIUS, radius: DINO_RADIUS, yVelocity: 0, isJumping: false };
       obstacles = [];
       score = 0;
-      game_over = false;
-      obstacle_timer = 0;
-      obstacle_frequency = 100;
+      gameOver = false;
+      obstacleTimer = 0;
+      obstacleFrequency = 100;
       SPEED = 5;
       overlay.style.display = "none";
       scoreDisplay.textContent = `Score: ${score}`;
+      gameRunning = false;
     }
 
     class Obstacle {
@@ -217,47 +236,48 @@
         this.height = OBSTACLE_HEIGHT;
         this.speed = SPEED;
       }
-      update() { this.x -= this.speed; }
-      draw() { ctx.fillRect(this.x, this.y, this.width, this.height); }
-      getRect() { return { x: this.x, y: this.y, width: this.width, height: this.height }; }
+
+      update() {
+        this.x -= this.speed;
+      }
+
+      draw() {
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
     }
 
     function jump() {
-      if (!dino.is_jumping) {
-        dino.is_jumping = true;
-        dino.y_velocity = -JUMP_SPEED;
+      if (!dino.isJumping) {
+        dino.isJumping = true;
+        dino.yVelocity = -JUMP_SPEED;
       }
     }
 
     function updateDino() {
-      if (dino.is_jumping) {
-        dino.y_velocity += GRAVITY;
-        dino.y += dino.y_velocity;
-        if (dino.y >= DINO_START_Y) {
-          dino.y = DINO_START_Y;
-          dino.is_jumping = false;
+      if (dino.isJumping) {
+        dino.yVelocity += GRAVITY;
+        dino.y += dino.yVelocity;
+
+        if (dino.y >= GROUND_Y - DINO_RADIUS) {
+          dino.y = GROUND_Y - DINO_RADIUS;
+          dino.isJumping = false;
         }
       }
     }
 
     function drawDino() {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(dino.x, dino.y, dino.size, dino.size);
-    }
-
-    function checkCollision(rect1, rect2) {
-      return rect1.x < rect2.x + rect2.width &&
-             rect1.x + rect1.size > rect2.x &&
-             rect1.y < rect2.y + rect2.height &&
-             rect1.y + rect1.size > rect2.y;
+      ctx.fillStyle = 'rgb(255, 102, 178)';
+      ctx.beginPath();
+      ctx.arc(dino.x, dino.y, dino.radius, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     function updateGame() {
-      if (!game_over) {
-        obstacle_timer++;
-        if (obstacle_timer >= obstacle_frequency) {
+      if (!gameOver) {
+        obstacleTimer++;
+        if (obstacleTimer >= obstacleFrequency) {
           obstacles.push(new Obstacle(WIDTH + 50));
-          obstacle_timer = 0;
+          obstacleTimer = 0;
         }
 
         updateDino();
@@ -267,8 +287,14 @@
           if (obstacle.x < -obstacle.width) {
             obstacles.splice(index, 1);
           }
-          if (checkCollision(dino, obstacle.getRect())) {
-            game_over = true;
+
+          if (
+            dino.x - dino.radius < obstacle.x + obstacle.width &&
+            dino.x + dino.radius > obstacle.x &&
+            dino.y - dino.radius < obstacle.y + obstacle.height &&
+            dino.y + dino.radius > obstacle.y
+          ) {
+            gameOver = true;
             overlay.style.display = "flex";
           }
         });
@@ -293,24 +319,25 @@
     function gameLoop() {
       updateGame();
       drawGame();
-      requestAnimationFrame(gameLoop);
+      if (!gameOver) {
+        requestAnimationFrame(gameLoop);
+      }
+    }
+
+    function startGame() {
+      if (!gameRunning) {
+        resetGame();
+        gameRunning = true;
+        gameLoop();
+      }
     }
 
     document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && !game_over) jump();
-      if (e.code === 'Enter' && game_over) resetGame();
-    });
-
-    canvas.addEventListener('touchstart', function() {
-      if (!game_over) jump();
-    });
-
-    canvas.addEventListener('mousedown', function() {
-      if (!game_over) jump();
+      if (e.code === 'Space' && !gameOver) jump();
+      if (e.code === 'Enter' && gameOver) resetGame();
     });
 
     resetGame();
-    gameLoop();
   </script>
 </body>
 </html>
