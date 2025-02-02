@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Website with Dino Game</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
-
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       font-family: 'Gigi', cursive;
       background-color: #f0f0f0;
       text-align: center;
+      overflow-x: hidden;
     }
 
     .header {
@@ -23,12 +24,11 @@
 
     .content {
       display: grid;
-      grid-template-areas:
-        "click reset explore explore"
-        "toggle surprise music capital";
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
-      justify-content: center;
+      justify-items: center;
       padding: 20px;
+      margin-top: 20px;
     }
 
     button {
@@ -41,41 +41,19 @@
       cursor: pointer;
       margin: 10px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    button:nth-of-type(1) { grid-area: click; }
-    button:nth-of-type(2) { grid-area: reset; }
-    button:nth-of-type(3) { grid-area: explore; }
-    button:nth-of-type(4) { grid-area: toggle; }
-    button:nth-of-type(5) { grid-area: surprise; }
-    button:nth-of-type(6) { grid-area: capital; }
-    button#sleepyMusicButton { grid-area: music; }
-
-    button.circle-button {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 0;
-      margin: 10px;
-    }
-
-    button.green-start {
-      background-color: green;
-      cursor: pointer;
-    }
-
-    button.blue-restart {
-      background-color: blue;
-      cursor: pointer;
+      width: 100%;
+      max-width: 200px;
     }
 
     #game-container {
       position: relative;
-      max-width: 600px;
+      max-width: 90%;
       margin: 20px auto;
     }
 
     #gameCanvas {
+      width: 100%;
+      height: auto;
       border: 2px solid black;
       display: block;
     }
@@ -99,13 +77,72 @@
       font-size: 18px;
     }
 
-    #sleepyMusicButton {
+    /* Button circle styles */
+    button.circle-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 0;
+      margin: 10px;
+    }
+
+    button.green-start {
+      background-color: green;
+      cursor: pointer;
+    }
+
+    button.blue-restart {
+      background-color: blue;
+      cursor: pointer;
+    }
+
+    /* Sleepy Music Button - updated design */
+    button#sleepyMusicButton {
       background-color: black;
       color: white;
-      border: 2px solid white;
-      border-radius: 20px;
-      opacity: 0.5;
-      cursor: not-allowed;
+      font-weight: bold;
+      border-radius: 10px;
+      padding: 12px 24px;
+      width: auto;
+      max-width: 200px;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    button#sleepyMusicButton:hover {
+      background-color: #333;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 1.5em;
+      }
+
+      .content p {
+        font-size: 0.9em;
+      }
+
+      #gameCanvas {
+        max-width: 100%;
+        height: auto;
+      }
+
+      button {
+        max-width: 180px;
+      }
+
+      #scoreDisplay {
+        font-size: 16px;
+      }
+
+      .circle-button {
+        width: 50px;
+        height: 50px;
+      }
     }
   </style>
 </head>
@@ -131,7 +168,6 @@
   <div id="game-container">
     <button class="circle-button green-start" onclick="startGame()"></button>
     <button class="circle-button blue-restart" onclick="resetGame()"></button>
-
     <canvas id="gameCanvas" width="600" height="300"></canvas>
     <div id="overlay">
       <div>Game Over! Press Enter to Restart</div>
@@ -143,6 +179,7 @@
     let clickCount = 0;
     let isDarkMode = false;
 
+    // Increment Counter
     function incrementCounter() {
       clickCount++;
       document.getElementById('counter').textContent = `Button Clicks: ${clickCount}`;
@@ -156,15 +193,18 @@
       }
     }
 
+    // Reset Counter
     function resetCounter() {
       clickCount = 0;
       document.getElementById('counter').textContent = 'Button Clicks: 0';
     }
 
+    // Explore Button
     function explore() {
       window.location.href = "https://www.google.com";
     }
 
+    // Toggle Theme
     function updateTheme(isDarkMode) {
       const backgroundColor = isDarkMode ? '#333' : '#f0f0f0';
       const textColor = isDarkMode ? '#fff' : '#000';
@@ -177,6 +217,7 @@
       updateTheme(isDarkMode);
     }
 
+    // Surprise Me
     function showSurprise() {
       const surprises = [
         "Did you know honey never spoils?",
@@ -190,14 +231,17 @@
       surpriseMessage.style.display = "block";
     }
 
+    // Navigate to Capital
     function navigateToCapital() {
       window.open('https://tinyurl.com/279f9x5f', '_blank');
     }
 
+    // Play Sleepy Music
     function playSleepyMusic() {
       window.open('https://youtube.com/playlist?list=RDKSpeKBhXhwg&playnext=1', '_blank');
     }
 
+    // Game Logic
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const overlay = document.getElementById('overlay');
@@ -257,7 +301,6 @@
       if (dino.isJumping) {
         dino.yVelocity += GRAVITY;
         dino.y += dino.yVelocity;
-
         if (dino.y >= GROUND_Y - DINO_RADIUS) {
           dino.y = GROUND_Y - DINO_RADIUS;
           dino.isJumping = false;
@@ -301,8 +344,8 @@
 
         score++;
         if (score % 100 === 0) SPEED += 0.5;
-
         scoreDisplay.textContent = `Score: ${score}`;
+        drawGame();
       }
     }
 
@@ -310,36 +353,34 @@
       ctx.clearRect(0, 0, WIDTH, HEIGHT);
       drawDino();
       obstacles.forEach(obstacle => obstacle.draw());
-      ctx.beginPath();
-      ctx.moveTo(0, GROUND_Y);
-      ctx.lineTo(WIDTH, GROUND_Y);
-      ctx.stroke();
+    }
+
+    function startGame() {
+      resetGame();
+      gameRunning = true;
+      gameLoop();
     }
 
     function gameLoop() {
-      updateGame();
-      drawGame();
-      if (!gameOver) {
+      if (gameRunning) {
+        updateGame();
         requestAnimationFrame(gameLoop);
       }
     }
 
-    function startGame() {
-      if (!gameRunning) {
-        resetGame();
-        gameRunning = true;
-        gameLoop();
-      }
-    }
-
     document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && !gameOver) jump();
-      if (e.code === 'Enter' && gameOver) resetGame();
+      if (e.key === ' ' || e.key === 'Enter') {
+        if (!gameRunning) startGame();
+        if (gameOver) resetGame();
+        if (!dino.isJumping) jump();
+      }
     });
 
-    canvas.addEventListener('click', jump);
-
-    resetGame();
+    // Touch event for mobile devices
+    canvas.addEventListener('touchstart', (e) => {
+      if (!dino.isJumping) jump();
+    });
   </script>
 </body>
+
 </html>
