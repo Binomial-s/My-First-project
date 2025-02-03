@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website with Dino Game</title>
+  <title>Enhanced Interactive Website</title>
   <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
   <style>
     html,
@@ -12,14 +12,35 @@
       margin: 0;
       padding: 0;
       font-family: 'Gigi', cursive;
-      background-color: #f0f0f0;
       text-align: center;
       overflow-x: hidden;
     }
 
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .header {
       padding: 20px;
-      background-color: lightblue;
+      background-color: rgba(173, 216, 230, 0.9);
+      margin: 20px;
+      border-radius: 15px;
+      animation: float 3s ease-in-out infinite;
     }
 
     .content {
@@ -32,30 +53,42 @@
     }
 
     button {
-      padding: 10px 20px;
-      background-color: mediumpurple;
+      padding: 15px 25px;
+      background: linear-gradient(45deg, #9b59b6, #8e44ad);
       color: white;
       font-weight: bold;
-      border: 4px solid white;
-      border-radius: 20px;
+      border: none;
+      border-radius: 25px;
       cursor: pointer;
       margin: 10px;
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
       width: 100%;
       max-width: 200px;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      background: linear-gradient(45deg, #8e44ad, #9b59b6);
     }
 
     #game-container {
       position: relative;
       max-width: 90%;
       margin: 20px auto;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     #gameCanvas {
       width: 100%;
       height: auto;
-      border: 2px solid black;
+      border-radius: 10px;
       display: block;
+      background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
     }
 
     #overlay {
@@ -71,97 +104,98 @@
       align-items: center;
       font-size: 24px;
       z-index: 10;
+      border-radius: 10px;
     }
 
     #scoreDisplay {
       font-size: 18px;
+      color: #2c3e50;
+      margin-top: 10px;
     }
 
-    /* Button circle styles */
-    button.circle-button {
+    .circle-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .circle-button:hover {
+      transform: scale(1.1);
+    }
+
+    .green-start { background-color: #2ecc71; }
+    .blue-restart { background-color: #3498db; }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ff0;
+      animation: confettiFall 3s linear;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .loader {
       width: 40px;
       height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
       border-radius: 50%;
-      font-size: 0;
-      margin: 10px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
     }
 
-    button.green-start {
-      background-color: green;
-      cursor: pointer;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    button.blue-restart {
-      background-color: blue;
-      cursor: pointer;
+    #surprise-message {
+      font-size: 1.2em;
+      color: #e74c3c;
+      margin: 15px 0;
+      min-height: 50px;
     }
 
-    /* Sleepy Music Button - updated design */
-    button#sleepyMusicButton {
-      background-color: black;
-      color: white;
-      font-weight: bold;
-      border-radius: 10px;
-      padding: 12px 24px;
-      width: auto;
-      max-width: 200px;
-      font-size: 16px;
-      cursor: pointer;
-      position: relative;
-      display: inline-block;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    button#sleepyMusicButton:hover {
-      background-color: #333;
-    }
-
-    /* Responsive Design */
     @media (max-width: 600px) {
-      .header h1 {
-        font-size: 1.5em;
-      }
-
-      .content p {
-        font-size: 0.9em;
-      }
-
-      #gameCanvas {
-        max-width: 100%;
-        height: auto;
-      }
-
-      button {
-        max-width: 180px;
-      }
-
-      #scoreDisplay {
-        font-size: 16px;
-      }
-
-      .circle-button {
-        width: 50px;
-        height: 50px;
-      }
+      .header h1 { font-size: 1.5em; }
+      .content p { font-size: 0.9em; }
+      button { max-width: 180px; }
+      #scoreDisplay { font-size: 16px; }
     }
   </style>
 </head>
 
 <body>
+  <div class="animated-bg"></div>
   <div class="header">
-    <h1>Welcome to My Website!</h1>
-    <p>This is my website. It has buttons. I made it. What more do you want? Go on, click something, I'm judging you silently. (Just kidding...mostly.)</p>
+    <h1>🎉 Welcome to Fun Site! 🎮</h1>
+    <p>Explore interactive buttons, play games, and discover surprises! Every click brings new magic! ✨</p>
   </div>
 
   <div class="content">
-    <p id="counter">Button Clicks: 0</p>
-    <button onclick="incrementCounter()">Click Me</button>
-    <button onclick="resetCounter()">Reset Counter</button>
-    <button onclick="explore()">Explore</button>
-    <button onclick="toggleTheme()">Toggle Theme</button>
-    <button onclick="showSurprise()">Surprise Me</button>
-    <button onclick="navigateToCapital()">Capital</button>
-    <button id="sleepyMusicButton" onclick="playSleepyMusic()" disabled>Sleepy Music</button>
+    <div class="loader" id="loader"></div>
+    <p id="counter">🔥 Button Clicks: 0</p>
+    <button onclick="incrementCounter()">🎯 Click Me!</button>
+    <button onclick="resetCounter()">🔄 Reset Counter</button>
+    <button onclick="explore()">🌍 Explore</button>
+    <button onclick="toggleTheme()">🌓 Toggle Theme</button>
+    <button onclick="showSurprise()">🎁 Surprise Me!</button>
+    <button onclick="navigateToCapital()">🏛️ Capital</button>
+    <button id="sleepyMusicButton" onclick="playSleepyMusic()" disabled>🎵 Sleepy Music</button>
     <p id="surprise-message"></p>
   </div>
 
@@ -172,215 +206,180 @@
     <div id="overlay">
       <div>Game Over! Press Enter to Restart</div>
     </div>
-    <p id="scoreDisplay">Score: 0</p>
+    <p id="scoreDisplay">⭐ Score: 0</p>
   </div>
 
   <script>
     let clickCount = 0;
     let isDarkMode = false;
+    const loader = document.getElementById('loader');
 
-    // Increment Counter
+    function showLoader() {
+      loader.style.display = 'block';
+      setTimeout(() => loader.style.display = 'none', 1000);
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDuration = Math.random() * 2 + 1 + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
     function incrementCounter() {
       clickCount++;
-      document.getElementById('counter').textContent = `Button Clicks: ${clickCount}`;
-
+      document.getElementById('counter').textContent = `🔥 Button Clicks: ${clickCount}`;
+      if (clickCount % 10 === 0) createConfetti();
+      
       if (clickCount >= 25) {
         const sleepyMusicButton = document.getElementById("sleepyMusicButton");
         sleepyMusicButton.disabled = false;
         sleepyMusicButton.style.opacity = "1";
         sleepyMusicButton.style.cursor = "pointer";
-        alert("You've unlocked the Sleepy Music button!");
       }
     }
 
-    // Reset Counter
-    function resetCounter() {
+    function resetCounter() { 
       clickCount = 0;
-      document.getElementById('counter').textContent = 'Button Clicks: 0';
+      document.getElementById('counter').textContent = '🔥 Button Clicks: 0';
+      createConfetti();
     }
 
-    // Explore Button
     function explore() {
-      window.location.href = "https://www.google.com";
-    }
-
-    // Toggle Theme
-    function updateTheme(isDarkMode) {
-      const backgroundColor = isDarkMode ? '#333' : '#f0f0f0';
-      const textColor = isDarkMode ? '#fff' : '#000';
-      document.body.style.backgroundColor = backgroundColor;
-      document.body.style.color = textColor;
+      showLoader();
+      setTimeout(() => window.location.href = "https://www.google.com", 1000);
     }
 
     function toggleTheme() {
       isDarkMode = !isDarkMode;
-      updateTheme(isDarkMode);
+      document.body.style.backgroundColor = isDarkMode ? '#2c3e50' : '';
+      document.body.style.color = isDarkMode ? '#ecf0f1' : '';
     }
 
-    // Surprise Me
     function showSurprise() {
-      const surprises = [
-        "Did you know honey never spoils?",
-        "Bananas are berries, but strawberries aren't!",
-        "A day on Venus is longer than a year!",
-        "Octopuses have three hearts!"
-      ];
-      const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
-      const surpriseMessage = document.getElementById("surprise-message");
-      surpriseMessage.textContent = randomSurprise;
-      surpriseMessage.style.display = "block";
+      const surprises = ["✨ You're awesome!", "🎉 Today is your day!", "🌟 Magic is everywhere!", "💫 Believe in yourself!"];
+      document.getElementById("surprise-message").textContent = surprises[Math.floor(Math.random() * surprises.length)];
+      createConfetti();
     }
 
-    // Navigate to Capital
     function navigateToCapital() {
       window.open('https://tinyurl.com/279f9x5f', '_blank');
     }
 
-    // Play Sleepy Music
     function playSleepyMusic() {
       window.open('https://youtube.com/playlist?list=RDKSpeKBhXhwg&playnext=1', '_blank');
     }
 
-    // Game Logic
+    // Enhanced Game Logic
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const overlay = document.getElementById('overlay');
     const scoreDisplay = document.getElementById('scoreDisplay');
-    const WIDTH = canvas.width;
-    const HEIGHT = canvas.height;
-    const DINO_RADIUS = 20;
-    const OBSTACLE_WIDTH = 30;
-    const OBSTACLE_HEIGHT = 60;
-    const JUMP_SPEED = 15;
-    const GRAVITY = 1;
-    const GROUND_Y = HEIGHT - 20;
-    let SPEED = 5;
-    let gameRunning = false;
-
-    let dino, obstacles, score, gameOver, obstacleTimer, obstacleFrequency;
-
-    function resetGame() {
-      dino = { x: 50, y: GROUND_Y - DINO_RADIUS, radius: DINO_RADIUS, yVelocity: 0, isJumping: false };
-      obstacles = [];
-      score = 0;
-      gameOver = false;
-      obstacleTimer = 0;
-      obstacleFrequency = 100;
-      SPEED = 5;
-      overlay.style.display = "none";
-      scoreDisplay.textContent = `Score: ${score}`;
-      gameRunning = false;
-    }
-
-    class Obstacle {
-      constructor(x) {
-        this.x = x;
-        this.y = GROUND_Y - OBSTACLE_HEIGHT;
-        this.width = OBSTACLE_WIDTH;
-        this.height = OBSTACLE_HEIGHT;
-        this.speed = SPEED;
-      }
-
-      update() {
-        this.x -= this.speed;
-      }
-
-      draw() {
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-    }
-
-    function jump() {
-      if (!dino.isJumping) {
-        dino.isJumping = true;
-        dino.yVelocity = -JUMP_SPEED;
-      }
-    }
-
-    function updateDino() {
-      if (dino.isJumping) {
-        dino.yVelocity += GRAVITY;
-        dino.y += dino.yVelocity;
-        if (dino.y >= GROUND_Y - DINO_RADIUS) {
-          dino.y = GROUND_Y - DINO_RADIUS;
-          dino.isJumping = false;
-        }
-      }
-    }
+    const gameWidth = 600, gameHeight = 300;
+    const dinoProps = { x: 50, y: 250, radius: 20, yVel: 0, isJumping: false };
+    let obstacles = [], score = 0, gameRunning = false, gameOver = false;
 
     function drawDino() {
-      ctx.fillStyle = 'rgb(255, 102, 178)';
+      ctx.fillStyle = '#2ecc71';
       ctx.beginPath();
-      ctx.arc(dino.x, dino.y, dino.radius, 0, Math.PI * 2);
+      ctx.arc(dinoProps.x, dinoProps.y, dinoProps.radius, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Eyes
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      ctx.arc(dinoProps.x + 10, dinoProps.y - 8, 4, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    function updateGame() {
-      if (!gameOver) {
-        obstacleTimer++;
-        if (obstacleTimer >= obstacleFrequency) {
-          obstacles.push(new Obstacle(WIDTH + 50));
-          obstacleTimer = 0;
-        }
-
-        updateDino();
-
-        obstacles.forEach((obstacle, index) => {
-          obstacle.update();
-          if (obstacle.x < -obstacle.width) {
-            obstacles.splice(index, 1);
-          }
-
-          if (
-            dino.x - dino.radius < obstacle.x + obstacle.width &&
-            dino.x + dino.radius > obstacle.x &&
-            dino.y - dino.radius < obstacle.y + obstacle.height &&
-            dino.y + dino.radius > obstacle.y
-          ) {
-            gameOver = true;
-            overlay.style.display = "flex";
-          }
-        });
-
-        score++;
-        if (score % 100 === 0) SPEED += 0.5;
-        scoreDisplay.textContent = `Score: ${score}`;
-        drawGame();
+    class Obstacle {
+      constructor() {
+        this.width = 30;
+        this.height = 50;
+        this.x = gameWidth;
+        this.y = gameHeight - this.height - 20;
       }
-    }
 
-    function drawGame() {
-      ctx.clearRect(0, 0, WIDTH, HEIGHT);
-      drawDino();
-      obstacles.forEach(obstacle => obstacle.draw());
-    }
+      draw() {
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
 
-    function startGame() {
-      resetGame();
-      gameRunning = true;
-      gameLoop();
+      update() { this.x -= 5 + score/100; }
     }
 
     function gameLoop() {
-      if (gameRunning) {
-        updateGame();
-        requestAnimationFrame(gameLoop);
+      if (!gameRunning) return;
+
+      ctx.clearRect(0, 0, gameWidth, gameHeight);
+      
+      // Update game state
+      dinoProps.y += dinoProps.yVel;
+      dinoProps.yVel += 0.5;
+      if (dinoProps.y > 250) {
+        dinoProps.y = 250;
+        dinoProps.yVel = 0;
+        dinoProps.isJumping = false;
       }
+
+      // Obstacle logic
+      if (Math.random() < 0.02) obstacles.push(new Obstacle());
+      obstacles = obstacles.filter(obs => {
+        obs.update();
+        return obs.x > -obs.width;
+      });
+
+      // Collision detection
+      obstacles.forEach(obs => {
+        if (dinoProps.x + 20 > obs.x && dinoProps.x - 20 < obs.x + obs.width &&
+            dinoProps.y + 20 > obs.y) {
+          gameOver = true;
+          overlay.style.display = "flex";
+          createConfetti();
+        }
+      });
+
+      // Drawing
+      drawDino();
+      obstacles.forEach(obs => obs.draw());
+      scoreDisplay.textContent = `⭐ Score: ${score++}`;
+
+      if (!gameOver) requestAnimationFrame(gameLoop);
+    }
+
+    function startGame() {
+      gameRunning = true;
+      gameOver = false;
+      obstacles = [];
+      score = 0;
+      overlay.style.display = "none";
+      gameLoop();
+    }
+
+    function resetGame() {
+      gameRunning = false;
+      gameOver = true;
+      startGame();
     }
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
-        if (!gameRunning) startGame();
-        if (gameOver) resetGame();
-        if (!dino.isJumping) jump();
+      if ((e.code === 'Space' || e.code === 'Enter') && !dinoProps.isJumping) {
+        dinoProps.yVel = -15;
+        dinoProps.isJumping = true;
       }
     });
 
-    // Touch event for mobile devices
-    canvas.addEventListener('touchstart', (e) => {
-      if (!dino.isJumping) jump();
+    canvas.addEventListener('touchstart', () => {
+      if (!dinoProps.isJumping) {
+        dinoProps.yVel = -15;
+        dinoProps.isJumping = true;
+      }
     });
   </script>
 </body>
-
 </html>
