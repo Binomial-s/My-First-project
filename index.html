@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enhanced Interactive Website</title>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C160JTQEPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C160JTQEPN');
+  </script>
+  
   <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: 'Gigi', cursive;
@@ -181,6 +189,7 @@
 
 <body>
   <div class="animated-bg"></div>
+
   <div class="header">
     <h1>🎉 Welcome to Fun Site! 🎮</h1>
     <p>Explore interactive buttons, play games, and discover surprises! Every click brings new magic! ✨</p>
@@ -235,7 +244,7 @@
       clickCount++;
       document.getElementById('counter').textContent = `🔥 Button Clicks: ${clickCount}`;
       if (clickCount % 10 === 0) createConfetti();
-      
+
       if (clickCount >= 25) {
         const sleepyMusicButton = document.getElementById("sleepyMusicButton");
         sleepyMusicButton.disabled = false;
@@ -289,7 +298,7 @@
       ctx.beginPath();
       ctx.arc(dinoProps.x, dinoProps.y, dinoProps.radius, 0, Math.PI * 2);
       ctx.fill();
-      
+
       // Eyes
       ctx.fillStyle = 'white';
       ctx.beginPath();
@@ -310,14 +319,14 @@
         ctx.fillRect(this.x, this.y, this.width, this.height);
       }
 
-      update() { this.x -= 5 + score/100; }
+      update() { this.x -= 5 + score / 100; }
     }
 
     function gameLoop() {
       if (!gameRunning) return;
 
       ctx.clearRect(0, 0, gameWidth, gameHeight);
-      
+
       // Update game state
       dinoProps.y += dinoProps.yVel;
       dinoProps.yVel += 0.5;
@@ -336,8 +345,7 @@
 
       // Collision detection
       obstacles.forEach(obs => {
-        if (dinoProps.x + 20 > obs.x && dinoProps.x - 20 < obs.x + obs.width &&
-            dinoProps.y + 20 > obs.y) {
+        if (dinoProps.x + 20 > obs.x && dinoProps.x - 20 < obs.x + obs.width && dinoProps.y + 20 > obs.y) {
           gameOver = true;
           overlay.style.display = "flex";
           createConfetti();
