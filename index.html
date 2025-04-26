@@ -4,34 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
+    <!--Google tag (gtag.js)-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VPMZ7T9KCN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+        function gtag() { dataLayer.push(arguement); }
         gtag('js', new Date());
         gtag('config', 'G-VPMZ7T9KCN');
     </script>
-    <title>Ultimate Interactive Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gigi&display=swap" rel="stylesheet">
+    <title>HELLO WORLD </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(45deg, #9b59b6, #8e44ad);
-            --secondary-gradient: linear-gradient(45deg, #3498db, #2ecc71);
-            --background-gradient: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            --primary-gradient: linear-gradient(15deg, #600086, #f3eded);
+            --secondary-gradient: linear-gradient(15deg, #e7ea26f8, #f65600);
+            --background-gradient: linear-gradient(90deg, #c4e619, #be16d8, #2878a3, #c7d3d7, #f50303);
         }
 
         html,
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Gigi', cursive;
+            font-family: "Playwrite RO", cursive;
             text-align: center;
             overflow-x: hidden;
             background: var(--background-gradient);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            transition: background-color 0.5s, color 0.5s;
+            animation: gradientBG 10s ease infinite;
+            transition: background-color 1s, color 1s;
         }
 
         @keyframes gradientBG {
@@ -41,13 +41,13 @@
         }
 
         h1 {
-            color: white;
-            margin: 20px 0;
+            color: rgb(255, 254, 254);
+            margin: 1080px 100;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #007BFF;
+            border: 4px solid #faf4f4;
+            border-top: 4px solid #242f3a;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -64,21 +64,21 @@
         button {
             padding: 15px 25px;
             background: var(--primary-gradient);
-            color: white;
+            color: rgb(3, 3, 3);
             border: none;
-            border-radius: 25px;
+            border-radius: 720px;
             cursor: pointer;
             margin: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 100 200px 150px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s ease;
             will-change: transform, box-shadow;
             max-width: 200px;
             width: 100%;
         }
 
         button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px) scale(1.00);
+            box-shadow: 10 20px 30px rgba(0, 0, 0, 0.3);
         }
 
         #counter {
@@ -90,11 +90,11 @@
         .quote-container {
             position: relative;
             margin: 30px auto;
-            padding: 25px;
+            padding: 20px;
             max-width: 800px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            backdrop-filter: blur(720px);
             min-height: 150px;
             display: flex;
             align-items: center;
@@ -107,7 +107,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             font-style: italic;
             padding: 20px;
-            animation: fadeIn 1s ease-in;
+            animation: fadeIn 2s ease-in;
         }
 
         @keyframes fadeIn {
@@ -143,7 +143,7 @@
         .floating-button {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            right: 50px;
             animation: float 3s ease-in-out infinite;
             will-change: transform;
             z-index: 1000;
@@ -170,11 +170,11 @@
         }
 
         #wikiSearchInput {
-            width: 90%;
-            padding: 12px;
-            border: 2px solid #007BFF;
-            border-radius: 25px;
-            font-size: 16px;
+            width: 70%;
+            padding: 10px;
+            border: 4px solid #077c51;
+            border-radius: 50px;
+            font-size: 15px;
             outline: none;
             margin-top: 20px;
             max-width: 500px;
@@ -236,15 +236,16 @@
 </head>
 
 <body>
-    <h1>🌟 Welcome to the Ultimate Interactive Site 🎉</h1>
+    <h1>🌟 Welcome!  🎉</h1>
+    <h2> we are all set to go you can do time pass here if you are bore</h2>
 
     <div>
-        <p id="counter">🔥 Button Clicks: 0</p>
-        <button onclick="app.incrementCounter()">🎯 Click Me!</button>
+        <p id="counter">🔥 Clicks: 0</p>
+        <button onclick="app.incrementCounter()">🎯 Click click!</button>
         <button onclick="app.resetCounter()">🔄 Reset Counter</button>
         <button onclick="app.explore()">🌍 Explore</button>
         <button onclick="app.toggleTheme()">🌓 Toggle Theme</button>
-        <button onclick="app.playSleepyMusic()">🎵 Sleepy Music</button>
+        <button onclick="app.playSleepyMusic()">🎵 Music</button>
         <button onclick="app.navigateToCapital()">🏛️ Capital</button>
     </div>
 
@@ -259,7 +260,7 @@
 
     <div class="quote-controls">
         <button onclick="app.showPreviousQuote()">◀ Previous</button>
-        <button onclick="app.showRandomQuote()">🎲 Random Quote</button>
+        <button onclick="app.showRandomQuote()">🎲 New Quote</button>
         <button onclick="app.showNextQuote()">Next ▶</button>
     </div>
 
@@ -271,7 +272,7 @@
     <button class="floating-button" onclick="app.showRandomQuote()">💡 Need Inspiration?</button>
 
     <div>
-        <h2>🔍 Search Wikipedia Below</h2>
+        <h2>🔍 Search your problems Below</h2>
         <input type="text" id="wikiSearchInput" placeholder="Search Wikipedia..." autofocus>
         <div class="spinner" id="wikiLoader"></div>
         <div id="wikiResults"></div>
