@@ -481,10 +481,6 @@
                 window.location.href = "https://www.google.com";
             };
 
-            const navigateToCapital = () => {
-                window.open('https://tinyurl.com/28p4v72f', '_blank');
-            };
-
             // Event listeners
             document.getElementById('wikiSearchInput').addEventListener('input', handleDebouncedSearch);
             document.getElementById('musicModal').addEventListener('click', (event) => {
@@ -499,7 +495,6 @@
           return {
                 incrementCounter,
                 resetCounter,
-                toggleTheme,
                 showRandomQuote,
                 showNextQuote,
                 showPreviousQuote,
@@ -508,7 +503,6 @@
                 playSleepyMusic,
                 closeMusicPlayer,
                 explore,
-                navigateToCapital
             };
         })();
     </script>
